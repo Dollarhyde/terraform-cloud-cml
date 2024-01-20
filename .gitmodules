@@ -1,0 +1,3 @@
+[submodule "cloud-cml"]
+	path = cloud-cml
+	url = https://github.com/CiscoDevNet/cloud-cml
