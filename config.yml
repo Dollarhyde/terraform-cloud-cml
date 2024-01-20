@@ -1,0 +1,8 @@
+
+aws:
+  username: cml_asee_terraform
+  group_name: terraform
+  s3_bucket_name: CHANGEME
+  key_name: asee-deployer
+  public_key : ""
+
