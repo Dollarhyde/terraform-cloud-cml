@@ -265,3 +265,355 @@ drwx------  4 user  user  128 Oct 31  2022 server-tcl-13-1
 drwx------  4 user  user  128 Oct 31  2022 ubuntu-22-04-20221028
 ```
 
+At that point run either `upload-images-to-aws-mac.sh` if on Linux or `upload-images-to-aws-mac.sh` if on MAC:
+
+```
+./upload-images-to-aws.sh [bucketname] [location such as /home/user/CML]
+or
+./upload-images-to-aws-mac.sh [bucketname] [location such as /Users/user/CML]
+```
+
+After upload is completed. Verify that the bucket contains similar structure. This will also verify credential access for deployment. 
+
+```
+aws s3 ls --recursive [bucketname]
+```
+
+```
+aws s3 ls --recursive s3-bucket-asee
+2024-01-22 18:16:28   85766356 cml2_2.6.1-11_amd64.deb
+2024-01-22 18:16:39       1923 refplat/node-definitions/alpine-trex.yaml
+2024-01-22 18:16:38       1915 refplat/node-definitions/alpine-wanem.yaml
+2024-01-22 18:16:41       2191 refplat/node-definitions/alpine.yaml
+2024-01-22 18:16:40       1725 refplat/node-definitions/asav.yaml
+2024-01-22 18:16:48       2150 refplat/node-definitions/cat8000v.yaml
+2024-01-22 18:16:47       5198 refplat/node-definitions/cat9000v-dd.yaml
+2024-01-22 18:16:46       5189 refplat/node-definitions/cat9000v-s1.yaml
+2024-01-22 18:16:44       2280 refplat/node-definitions/csr1000v.yaml
+2024-01-22 18:16:48       1905 refplat/node-definitions/desktop.yaml
+2024-01-22 18:16:42       1722 refplat/node-definitions/iosv.yaml
+2024-01-22 18:16:45       1734 refplat/node-definitions/iosvl2.yaml
+2024-01-22 18:16:35       3299 refplat/node-definitions/iosxrv9000.yaml
+2024-01-22 18:16:37       4177 refplat/node-definitions/nxosv9000.yaml
+2024-01-22 18:16:43       2372 refplat/node-definitions/server.yaml
+2024-01-22 18:16:36       3159 refplat/node-definitions/ubuntu.yaml
+2024-01-22 18:20:23   53673984 refplat/virl-base-images/alpine-3-16-2-base/alpine-3-16-2-base.qcow2
+2024-01-22 18:20:23        263 refplat/virl-base-images/alpine-3-16-2-base/alpine-3-16-2-base.yaml
+2024-01-22 18:19:47  394919936 refplat/virl-base-images/alpine-3-16-2-trex/alpine-3-16-2-trex.qcow2
+2024-01-22 18:19:47        266 refplat/virl-base-images/alpine-3-16-2-trex/alpine-3-16-2-trex.yaml
+2024-01-22 18:19:41   53215232 refplat/virl-base-images/alpine-3-16-2-wanem/alpine-3-16-2-wanem.qcow2
+2024-01-22 18:19:41        290 refplat/virl-base-images/alpine-3-16-2-wanem/alpine-3-16-2-wanem.yaml
+2024-01-22 18:20:07        320 refplat/virl-base-images/asav-9-18-2/asav-9-18-2.yaml
+2024-01-22 18:20:07  340262912 refplat/virl-base-images/asav-9-18-2/asav9-18-2.qcow2
+2024-01-22 18:24:50 1856634880 refplat/virl-base-images/cat8000v-17-09-01a/c8000v-universalk9_8G_serial.17.09.01a.qcow2
+2024-01-22 18:24:50        282 refplat/virl-base-images/cat8000v-17-09-01a/cat8000v-17-09-01a.yaml
+2024-01-22 18:23:06        329 refplat/virl-base-images/cat9000v-17-10-01prd7/cat9000v-dd-17.10.01prd7.yaml
+2024-01-22 18:23:06        329 refplat/virl-base-images/cat9000v-17-10-01prd7/cat9000v-s1-17.10.01prd7.yaml
+2024-01-22 18:23:06 2155806720 refplat/virl-base-images/cat9000v-17-10-01prd7/cat9kv-prd-17.10.01prd7.qcow2
+2024-01-22 18:20:42        275 refplat/virl-base-images/csr1000v-17-03-06/csr1000v-17-03-06.yaml
+2024-01-22 18:20:42 1422000128 refplat/virl-base-images/csr1000v-17-03-06/csr1000v-universalk9.17.03.06-serial.qcow2
+2024-01-22 18:24:30  365138944 refplat/virl-base-images/desktop-3-16-2-xfce/desktop-3-16-2-xfce.qcow2
+2024-01-22 18:24:30        264 refplat/virl-base-images/desktop-3-16-2-xfce/desktop-3-16-2-xfce.yaml
+2024-01-22 18:20:30        258 refplat/virl-base-images/iosv-159-3-m6/iosv-159-3-m6.yaml
+2024-01-22 18:20:30   57309696 refplat/virl-base-images/iosv-159-3-m6/vios-adventerprisek9-m.spa.159-3.m6.qcow2
+2024-01-22 18:21:38        267 refplat/virl-base-images/iosvl2-2020/iosvl2-2020.yaml
+2024-01-22 18:21:38   90409984 refplat/virl-base-images/iosvl2-2020/vios_l2-adventerprisek9-m.ssa.high_iron_20200929.qcow2
+2024-01-22 18:16:49        264 refplat/virl-base-images/iosxrv9000-7-7-1/iosxrv9000-7-7-1.yaml
+2024-01-22 18:16:49 1643905024 refplat/virl-base-images/iosxrv9000-7-7-1/xrv9k-fullk9-x-7.7.1.qcow2
+2024-01-22 18:18:23 2097086464 refplat/virl-base-images/nxosv9300-10-3-1-f/nexus9300v64.10.3.1.F.qcow2
+2024-01-22 18:19:38        269 refplat/virl-base-images/nxosv9300-10-3-1-f/nxosv9300-10-3-1-f.yaml
+2024-01-22 18:20:37        242 refplat/virl-base-images/server-tcl-13-1/server-tcl-13-1.yaml
+2024-01-22 18:20:37   21495808 refplat/virl-base-images/server-tcl-13-1/tcl-13-1.qcow2
+2024-01-22 18:17:53  664862720 refplat/virl-base-images/ubuntu-22-04-20221028/jammy-server-cloudimg-amd64.img
+2024-01-22 18:17:53        320 refplat/virl-base-images/ubuntu-22-04-20221028/ubuntu-22-04-20221028.yaml
+```
+
+## Initiate the CML instance 
+
+The next step is to change directory to `cisco-cml` folder.
+
+```
+cd cisco-cml
+```
+
+The `config.yml` file needs to be modified. This information is directly for `cisco-cml` repository. 
+
+- `aws.bucket`. This is the name of the bucket where the software and the reference platform files are stored. Must be accessible per the policy / role defined above
+- `aws.region`. This defines the region of the bucket and typically matches the region of the AWS CLI as configured above. It also defines the region where the EC2 instances are created
+- `aws.flavor`. The flavor / instance type to be used for the AWS CML instance. Typically a metal instance
+- `aws.profile`. The name of the permission profile to be used for the instance. This needs to permit access to the S3 bucket with the software and reference platforms. In the example given above, this was named "s3-access-for-ec2"
+- `aws.keyname`. SSH key name which needs to be installed on AWS EC2. This key will be injected into the instance using cloud-init.
+- `aws.disk_size`. The size of the disk in gigabytes. 64 is a good starting value but this truly depends on the kind of nodes and the planned instance lifetime.
+
+Key name `hostname`. Name of the instance, standard hostname rules apply.
+
+Within the app section, the following keys must be set with the correct values:
+
+- `app.user` username of the admin user (typically "admin") for UI access
+- `app.pass` password of the admin user
+- `app.deb` the filename of the Debian .deb package with the software, stored in the specified S3 bucket at the top level. In this case it should be `cml2_2.6.1-11_amd64.deb`
+- `app.customize` a list of scripts, located in the `scripts` folder which will be run as part of the instance creation to customize the install
+
+Within the sys section, the OS user and password are defined.
+
+- `sys.user` username of the OS user (typically "sysadmin") for Cockpit and OS level maintenance access
+- `sys.pass` the associated password
+
+Within the license section, license flavor, token, and nodes are defined.
+
+- `license.flavor`: either `CML_Enterprise`, `CML_Education`, `CML_Personal` or `CML_Personal40` are acceptable
+- `license.token`: the Smart Licensing token
+- `license.nodes`: the number of *additional* nodes, not applicable for the personal flavors.
+
+Within the refplat section, images that were uploaded are selected. If all images were uploaded, no changes are necessary. 
+
+- `refplat.definitions` lists the node definition IDs
+- `refplat.images` lists the associated image definition IDs
+
+Below is an example of a config.yml
+
+```
+aws:
+  region: us-east-1
+  bucket: s3-bucket-asee
+  flavor: m5zn.metal
+  profile: s3-access-for-ec2
+  key_name: asee-deployer
+  disk_size: 64
+
+hostname: cml-controller
+
+app:
+  user: admin
+  pass: ASEEASEE1!
+  # need to escape special chars:
+  # pass: '\"!@$%'
+  deb: cml2_2.6.1-11_amd64.deb
+  # list must have at least ONE element, this is what the dummy is for in case
+  # 00- and 01- are commented out!
+  customize:
+    # - 00-patch_vmx.sh
+    # - 01-patty.sh
+    - 99-dummy.sh
+
+sys:
+  user: sysadmin
+  pass: ASEEASEE1!
+
+license:
+  flavor: CML_Education
+  token: MzQ2[...]D%0A
+  # unless you have additional nodes, leave this at zero
+  nodes: 0
+
+# select the ones needed by un-/commenting them. The selected
+# reference platforms will be copied from the specified bucket
+# and must be available prior to starting an instance.
+refplat:
+  definitions:
+    - alpine
+    - alpine-trex
+    - alpine-wanem
+    - asav
+    - cat8000v
+    - cat9000v-s1
+    - csr1000v
+    - desktop
+    - iosv
+    - iosvl2
+    - iosxrv9000
+    - nxosv9000
+    - server
+    - ubuntu
+  images:
+    - alpine-3-16-2-base
+    - alpine-3-16-2-trex
+    - alpine-3-16-2-wanem
+    - asav-9-18-2
+    - cat8000v-17-09-01a
+    - cat9000v-s1-17.10.01prd7
+    - csr1000v-17-03-06
+    - desktop-3-16-2-xfce
+    - iosv-159-3-m6
+    - iosvl2-2020
+    - iosxrv9000-7-7-1
+    - nxosv9300-10-3-1-f
+    - server-tcl-13-1
+    - ubuntu-22-04-20221028
+```
+
+### Starting an instance
+
+Starting an instance is done via `terraform plan` and `terraform apply`. The instance will be deployed and fully configured based on the provided configuration. Terraform will wait until CML is up and running, this will take approximately 5-10 minutes and depends a bit on the flavor used.
+
+At the end, the Terraform output shows the relevant information about the instance:
+
+- The URL to access it
+- The public IP address
+- The CML software version running
+- The command to automatically remove the license from the instance prior to destroying it (see below).
+
+```
+cml2info = {
+  "address" = "54.162.98.41"
+  "del" = "ssh -p1122 sysadmin@54.162.98.41 /provision/del.sh"
+  "url" = "https://54.162.98.41"
+  "version" = "2.6.1+build.11"
+}
+```
+
+## Example run
+
+To deploy a CML instance on AWS and after configuring the required variables and editing the `config.yaml` file, a `terraform plan` will show all the planned changes. After reviewing those, a `terraform apply` will start and configure a CML instance on AWS.
+
+```plain
+$ terraform apply -auto-approve
+module.deploy.data.aws_ami.ubuntu: Reading...
+module.deploy.data.aws_ami.ubuntu: Read complete after 1s [id=ami-0d497a49e7d359666]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # module.deploy.aws_instance.cml will be created
+  + resource "aws_instance" "cml" {
+      + ami                                  = "ami-0d497a49e7d359666"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+[...]
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + cml2info = {}
+module.deploy.random_id.id: Creating...
+module.deploy.random_id.id: Creation complete after 0s [id=x1hR1Q]
+module.deploy.aws_security_group.sg-tf: Creating...
+module.deploy.aws_security_group.sg-tf: Creation complete after 2s [id=sg-04865f65e43aa917f]
+module.deploy.aws_instance.cml: Creating...
+module.deploy.aws_instance.cml: Still creating... [10s elapsed]
+module.deploy.aws_instance.cml: Creation complete after 13s [id=i-0e7697766ca6c18e1]
+module.ready.data.cml2_system.state: Reading...
+module.ready.data.cml2_system.state: Still reading... [10s elapsed]
+module.ready.data.cml2_system.state: Still reading... [20s elapsed]
+[...]
+module.ready.data.cml2_system.state: Still reading... [3m50s elapsed]
+module.ready.data.cml2_system.state: Still reading... [4m0s elapsed]
+module.ready.data.cml2_system.state: Read complete after 4m2s [id=dd68b604-8930-45c6-8d58-a1da578e02b4]
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+cml2info = {
+  "address" = "18.194.38.215"
+  "del" = "ssh -p1122 sysadmin@18.194.38.215 /provision/del.sh"
+  "url" = "https://18.194.38.215"
+  "version" = "2.5.1+build.10"
+}
+
+$
+```
+
+As can be seen above, a public IPv4 address has been assigned to the instance which can be used to access it via SSH and the provided SSH key pair (if this does not connect right away then the system isn't ready, yet and more wait is needed):
+
+```plain
+$ ssh -p1122 sysadmin@18.194.38.215
+The authenticity of host '[18.194.38.215]:1122 ([18.194.38.215]:1122)' can't be established.
+ED25519 key fingerprint is SHA256:dz7GcRGzcWiyHbPb++NyQykP9r7UoG0rNiACi5ft1lQ.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '[18.194.38.215]:1122' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1033-aws x86_64)
+[...]
+sysadmin@rschmied-aws-2023042001:~$ 
+```
+
+At this point, the status of the system can be checked:
+
+```plain
+sysadmin@rschmied-aws-2023042001:~$ systemctl status | head
+● rschmied-aws-2023042001
+    State: running
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Fri 2023-04-21 14:45:00 UTC; 4min 34s ago
+   CGroup: /
+           ├─23120 bpfilter_umh
+           ├─user.slice 
+           │ └─user-1001.slice 
+           │   ├─user@1001.service 
+sysadmin@rschmied-aws-2023042001:~$ systemctl status virl2.target
+● virl2.target - CML2 Network Simulation System
+     Loaded: loaded (/lib/systemd/system/virl2.target; enabled; vendor preset: enabled)
+     Active: active since Fri 2023-04-21 14:47:58 UTC; 2min 13s ago
+
+Warning: some journal files were not opened due to insufficient permissions.
+sysadmin@rschmied-aws-2023042001:~$ 
+```
+
+The system is running and the VIRL2 target (CML) is active!
+
+Prior to stopping the instance, the licensing token must be removed via the UI. Otherwise it's still considered "in use" in Smart Licensing. This is done via the UI or using the `del.sh` script / SSH command which is provided as part of the deploy output (see above). Then run the destroy command.
+
+> **Note:** The `del.sh` has no output if the command is successful.
+
+```plain
+$ ssh -p1122 sysadmin@18.194.38.215 /provision/del.sh
+The authenticity of host '[18.194.38.215]:1122 ([18.194.38.215]:1122)' can't be established.
+ED25519 key fingerprint is SHA256:4QxgLv9zzKR5gJP4rWE41STdnAHufBYkTKBpp/VA+k8.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '[18.194.38.215]:1122' (ED25519) to the list of known hosts.
+
+$ terraform destroy -auto-approve
+module.deploy.random_id.id: Refreshing state... [id=x1hR1Q]
+module.deploy.data.aws_ami.ubuntu: Reading...
+module.deploy.aws_security_group.sg-tf: Refreshing state... [id=sg-04865f65e43aa917f]
+module.deploy.data.aws_ami.ubuntu: Read complete after 1s [id=ami-0d497a49e7d359666]
+module.deploy.aws_instance.cml: Refreshing state... [id=i-0e7697766ca6c18e1]
+module.ready.data.cml2_system.state: Reading...
+module.ready.data.cml2_system.state: Read complete after 0s [id=cf22e2e6-7ef2-420b-8191-404f3f7f3600]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # module.deploy.aws_instance.cml will be destroyed
+  - resource "aws_instance" "cml" {
+      - ami                                  = "ami-0d497a49e7d359666" -> null
+[...]
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Changes to Outputs:
+  - cml2info = {
+      - address = "18.194.38.215"
+      - del     = "ssh -p1122 sysadmin@18.194.38.215 /provision/del.sh"
+      - url     = "https://18.194.38.215"
+      - version = "2.5.1+build.10"
+    } -> null
+module.deploy.aws_instance.cml: Destroying... [id=i-0e7697766ca6c18e1]
+module.deploy.aws_instance.cml: Still destroying... [id=i-0e7697766ca6c18e1, 10s elapsed]
+module.deploy.aws_instance.cml: Still destroying... [id=i-0e7697766ca6c18e1, 20s elapsed]
+module.deploy.aws_instance.cml: Still destroying... [id=i-0e7697766ca6c18e1, 30s elapsed]
+module.deploy.aws_instance.cml: Destruction complete after 30s
+module.deploy.aws_security_group.sg-tf: Destroying... [id=sg-04865f65e43aa917f]
+module.deploy.aws_security_group.sg-tf: Destruction complete after 0s
+module.deploy.random_id.id: Destroying... [id=x1hR1Q]
+module.deploy.random_id.id: Destruction complete after 0s
+
+Destroy complete! Resources: 3 destroyed.
+
+$
+```
+
+At this point, the compute resources have been released / destroyed. Images in the S3 bucket are still available for bringing up new instances.
+
+> **Note:** Metal instances take significantly longer to bring up and to destroy. The `m5zn.metal` instance type takes about 5-10 minutes for both. Deployment times also depend on the number and size of reference platform images that should be copied to the instance.
+
