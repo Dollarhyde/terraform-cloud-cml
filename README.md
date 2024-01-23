@@ -273,6 +273,19 @@ or
 ./upload-images-to-aws-mac.sh [bucketname] [location such as /Users/user/CML]
 ```
 
+The initial screen will ask whether to copy the CML binary which we should say "Yes"
+
+![](images/CML_copy_1.jpeg)
+
+The next screen is asking which images to upload. Recommended is to upload all images.
+
+![](images/CML_copy_2.jpeg)
+
+This page is the progress during the copying phase.
+
+![](images/CML_copy_3.jpeg)
+
+
 After upload is completed. Verify that the bucket contains similar structure. This will also verify credential access for deployment. 
 
 ```
@@ -569,6 +582,14 @@ sysadmin@cml-controller:~$
 ```
 
 The system is running and the VIRL2 target (CML) is active!
+
+![](images/CML_1.jpeg)
+
+We use the credentials within `config.yml` and we are successfully logged in.
+
+![](images/CML_2.jpeg)
+
+## Instance termination
 
 Prior to stopping the instance, the licensing token must be removed via the UI. Otherwise it's still considered "in use" in Smart Licensing. This is done via the UI or using the `del.sh` script / SSH command which is provided as part of the deploy output (see above). Then run the destroy command.
 
