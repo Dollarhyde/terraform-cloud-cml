@@ -456,7 +456,7 @@ At the end, the Terraform output shows the relevant information about the instan
 ```
 cml2info = {
   "address" = "54.162.98.41"
-  "del" = "ssh -p1122 sysadmin@54.162.98.41 /provision/del.sh"
+  "del" = "ssh -p1122 sysadmin@54.162.98.41 -i ../asee_rsa /provision/del.sh"
   "url" = "https://54.162.98.41"
   "version" = "2.6.1+build.11"
 }
@@ -511,7 +511,7 @@ Outputs:
 
 cml2info = {
   "address" = "18.194.38.215"
-  "del" = "ssh -p1122 sysadmin@18.194.38.215 /provision/del.sh"
+  "del" = "ssh -p1122 sysadmin@18.194.38.215 -i ../asee_rsa /provision/del.sh"
   "url" = "https://18.194.38.215"
   "version" = "2.5.1+build.10"
 }
@@ -522,7 +522,7 @@ $
 As can be seen above, a public IPv4 address has been assigned to the instance which can be used to access it via SSH and the provided SSH key pair (if this does not connect right away then the system isn't ready, yet and more wait is needed):
 
 ```plain
-$ ssh -p1122 sysadmin@18.194.38.215
+$ ssh -p1122 sysadmin@18.194.38.215 -i ../asee_rsa 
 The authenticity of host '[18.194.38.215]:1122 ([18.194.38.215]:1122)' can't be established.
 ED25519 key fingerprint is SHA256:dz7GcRGzcWiyHbPb++NyQykP9r7UoG0rNiACi5ft1lQ.
 This key is not known by any other names
@@ -563,7 +563,7 @@ Prior to stopping the instance, the licensing token must be removed via the UI. 
 > **Note:** The `del.sh` has no output if the command is successful.
 
 ```plain
-$ ssh -p1122 sysadmin@18.194.38.215 /provision/del.sh
+$ ssh -p1122 sysadmin@18.194.38.215 -i ../asee_rsa /provision/del.sh
 The authenticity of host '[18.194.38.215]:1122 ([18.194.38.215]:1122)' can't be established.
 ED25519 key fingerprint is SHA256:4QxgLv9zzKR5gJP4rWE41STdnAHufBYkTKBpp/VA+k8.
 This key is not known by any other names
@@ -594,7 +594,7 @@ Plan: 0 to add, 0 to change, 3 to destroy.
 Changes to Outputs:
   - cml2info = {
       - address = "18.194.38.215"
-      - del     = "ssh -p1122 sysadmin@18.194.38.215 /provision/del.sh"
+      - del     = "ssh -p1122 sysadmin@18.194.38.215 -i ../asee_rsa /provision/del.sh"
       - url     = "https://18.194.38.215"
       - version = "2.5.1+build.10"
     } -> null
