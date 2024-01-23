@@ -467,9 +467,19 @@ cml2info = {
 To deploy a CML instance on AWS and after configuring the required variables and editing the `config.yaml` file, a `terraform plan` will show all the planned changes. After reviewing those, a `terraform apply` will start and configure a CML instance on AWS.
 
 ```plain
+$ terraform init
+Initializing the backend...
+Initializing modules...
+- deploy in module-cml2-deploy-aws
+- ready in module-cml2-readyness
+[...]
+Terraform has been successfully initialized!
+```
+
+```plain
 $ terraform apply -auto-approve
 module.deploy.data.aws_ami.ubuntu: Reading...
-module.deploy.data.aws_ami.ubuntu: Read complete after 1s [id=ami-0d497a49e7d359666]
+module.deploy.data.aws_ami.ubuntu: Read complete after 0s [id=ami-027a754129abb5386]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
@@ -479,7 +489,7 @@ Terraform will perform the following actions:
 
   # module.deploy.aws_instance.cml will be created
   + resource "aws_instance" "cml" {
-      + ami                                  = "ami-0d497a49e7d359666"
+      + ami                                  = "ami-027a754129abb5386"
       + arn                                  = (known after apply)
       + associate_public_ip_address          = (known after apply)
       + availability_zone                    = (known after apply)
@@ -489,71 +499,73 @@ Terraform will perform the following actions:
 Plan: 3 to add, 0 to change, 0 to destroy.
 
 Changes to Outputs:
-  + cml2info = {}
+  + cml2info = {
+      + address = (known after apply)
+      + del     = (known after apply)
+      + url     = (known after apply)
+      + version = (known after apply)
+    }
 module.deploy.random_id.id: Creating...
-module.deploy.random_id.id: Creation complete after 0s [id=x1hR1Q]
+module.deploy.random_id.id: Creation complete after 0s [id=kxkgSg]
 module.deploy.aws_security_group.sg-tf: Creating...
-module.deploy.aws_security_group.sg-tf: Creation complete after 2s [id=sg-04865f65e43aa917f]
+module.deploy.aws_security_group.sg-tf: Creation complete after 3s [id=sg-0486dd7f2909f5ae2]
 module.deploy.aws_instance.cml: Creating...
 module.deploy.aws_instance.cml: Still creating... [10s elapsed]
-module.deploy.aws_instance.cml: Creation complete after 13s [id=i-0e7697766ca6c18e1]
+module.deploy.aws_instance.cml: Creation complete after 13s [id=i-00cec8cfccadb1551]
 module.ready.data.cml2_system.state: Reading...
-module.ready.data.cml2_system.state: Still reading... [10s elapsed]
-module.ready.data.cml2_system.state: Still reading... [20s elapsed]
 [...]
-module.ready.data.cml2_system.state: Still reading... [3m50s elapsed]
-module.ready.data.cml2_system.state: Still reading... [4m0s elapsed]
-module.ready.data.cml2_system.state: Read complete after 4m2s [id=dd68b604-8930-45c6-8d58-a1da578e02b4]
+module.ready.data.cml2_system.state: Still reading... [5m10s elapsed]
+module.ready.data.cml2_system.state: Read complete after 5m18s [id=c664136a-66ff-4ce3-b6cf-260b01ca7d55]
 
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 
 Outputs:
 
 cml2info = {
-  "address" = "18.194.38.215"
-  "del" = "ssh -p1122 sysadmin@18.194.38.215 -i ../asee_rsa /provision/del.sh"
-  "url" = "https://18.194.38.215"
-  "version" = "2.5.1+build.10"
+  "address" = "54.162.98.41"
+  "del" = "ssh -p1122 sysadmin@54.162.98.41 /provision/del.sh"
+  "url" = "https://54.162.98.41"
+  "version" = "2.6.1+build.11"
 }
 
-$
+
 ```
 
 As can be seen above, a public IPv4 address has been assigned to the instance which can be used to access it via SSH and the provided SSH key pair (if this does not connect right away then the system isn't ready, yet and more wait is needed):
 
 ```plain
-$ ssh -p1122 sysadmin@18.194.38.215 -i ../asee_rsa 
-The authenticity of host '[18.194.38.215]:1122 ([18.194.38.215]:1122)' can't be established.
-ED25519 key fingerprint is SHA256:dz7GcRGzcWiyHbPb++NyQykP9r7UoG0rNiACi5ft1lQ.
-This key is not known by any other names
+$ ssh -p1122 sysadmin@54.162.98.41 -i ../asee_rsa
+The authenticity of host '[54.162.98.41]:1122 ([54.162.98.41]:1122)' can't be established.
+ED25519 key fingerprint is SHA256:igoghBcrQVUcEuqLggPR6A1113lELMlt4GdPoHpe0LA.
+This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added '[18.194.38.215]:1122' (ED25519) to the list of known hosts.
-Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1033-aws x86_64)
+Warning: Permanently added '[54.162.98.41]:1122' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1051-aws x86_64)
 [...]
-sysadmin@rschmied-aws-2023042001:~$ 
+sysadmin@cml-controller:~$ 
 ```
 
 At this point, the status of the system can be checked:
 
 ```plain
-sysadmin@rschmied-aws-2023042001:~$ systemctl status | head
-● rschmied-aws-2023042001
+sysadmin@cml-controller:~$ systemctl status | head
+● sysadmin@cml-controller
     State: running
      Jobs: 0 queued
    Failed: 0 units
-    Since: Fri 2023-04-21 14:45:00 UTC; 4min 34s ago
+    Since: Fri 2024-01-22 17:42:00 UTC; 12min 34s ago
    CGroup: /
            ├─23120 bpfilter_umh
            ├─user.slice 
            │ └─user-1001.slice 
            │   ├─user@1001.service 
-sysadmin@rschmied-aws-2023042001:~$ systemctl status virl2.target
+sysadmin@cml-controller:~$ systemctl status virl2.target
 ● virl2.target - CML2 Network Simulation System
      Loaded: loaded (/lib/systemd/system/virl2.target; enabled; vendor preset: enabled)
-     Active: active since Fri 2023-04-21 14:47:58 UTC; 2min 13s ago
+     Active: active since Fri 2024-01-22 17:42:00 UTC; 12min 34s ago
 
 Warning: some journal files were not opened due to insufficient permissions.
-sysadmin@rschmied-aws-2023042001:~$ 
+sysadmin@cml-controller:~$ 
 ```
 
 The system is running and the VIRL2 target (CML) is active!
@@ -563,21 +575,17 @@ Prior to stopping the instance, the licensing token must be removed via the UI. 
 > **Note:** The `del.sh` has no output if the command is successful.
 
 ```plain
-$ ssh -p1122 sysadmin@18.194.38.215 -i ../asee_rsa /provision/del.sh
-The authenticity of host '[18.194.38.215]:1122 ([18.194.38.215]:1122)' can't be established.
-ED25519 key fingerprint is SHA256:4QxgLv9zzKR5gJP4rWE41STdnAHufBYkTKBpp/VA+k8.
-This key is not known by any other names
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added '[18.194.38.215]:1122' (ED25519) to the list of known hosts.
+$ ssh -p1122 sysadmin@54.162.98.41 -i ../asee_rsa /provision/del.sh
+$
 
 $ terraform destroy -auto-approve
-module.deploy.random_id.id: Refreshing state... [id=x1hR1Q]
+module.deploy.random_id.id: Refreshing state... [id=kxkgSg]
 module.deploy.data.aws_ami.ubuntu: Reading...
-module.deploy.aws_security_group.sg-tf: Refreshing state... [id=sg-04865f65e43aa917f]
-module.deploy.data.aws_ami.ubuntu: Read complete after 1s [id=ami-0d497a49e7d359666]
-module.deploy.aws_instance.cml: Refreshing state... [id=i-0e7697766ca6c18e1]
+module.deploy.aws_security_group.sg-tf: Refreshing state... [id=sg-0486dd7f2909f5ae2]
+module.deploy.data.aws_ami.ubuntu: Read complete after 0s [id=ami-027a754129abb5386]
+module.deploy.aws_instance.cml: Refreshing state... [id=i-00cec8cfccadb1551]
 module.ready.data.cml2_system.state: Reading...
-module.ready.data.cml2_system.state: Read complete after 0s [id=cf22e2e6-7ef2-420b-8191-404f3f7f3600]
+module.ready.data.cml2_system.state: Read complete after 0s [id=31f3581a-30e7-4af6-a98c-5ae4fc71a825]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   - destroy
@@ -586,27 +594,22 @@ Terraform will perform the following actions:
 
   # module.deploy.aws_instance.cml will be destroyed
   - resource "aws_instance" "cml" {
-      - ami                                  = "ami-0d497a49e7d359666" -> null
+      - ami                                  = "ami-027a754129abb5386" -> null
 [...]
 
 Plan: 0 to add, 0 to change, 3 to destroy.
 
 Changes to Outputs:
   - cml2info = {
-      - address = "18.194.38.215"
-      - del     = "ssh -p1122 sysadmin@18.194.38.215 -i ../asee_rsa /provision/del.sh"
-      - url     = "https://18.194.38.215"
-      - version = "2.5.1+build.10"
+      - address = "54.162.98.41"
+      - del     = "ssh -p1122 sysadmin@54.162.98.41 /provision/del.sh"
+      - url     = "https://54.162.98.41"
+      - version = "2.6.1+build.11"
     } -> null
-module.deploy.aws_instance.cml: Destroying... [id=i-0e7697766ca6c18e1]
-module.deploy.aws_instance.cml: Still destroying... [id=i-0e7697766ca6c18e1, 10s elapsed]
-module.deploy.aws_instance.cml: Still destroying... [id=i-0e7697766ca6c18e1, 20s elapsed]
-module.deploy.aws_instance.cml: Still destroying... [id=i-0e7697766ca6c18e1, 30s elapsed]
-module.deploy.aws_instance.cml: Destruction complete after 30s
-module.deploy.aws_security_group.sg-tf: Destroying... [id=sg-04865f65e43aa917f]
-module.deploy.aws_security_group.sg-tf: Destruction complete after 0s
-module.deploy.random_id.id: Destroying... [id=x1hR1Q]
-module.deploy.random_id.id: Destruction complete after 0s
+module.deploy.aws_instance.cml: Destroying... [id=i-00cec8cfccadb1551]
+module.deploy.aws_instance.cml: Still destroying... [id=i-00cec8cfccadb1551, 10s elapsed]
+module.deploy.aws_instance.cml: Still destroying... [id=i-00cec8cfccadb1551, 20s elapsed]
+module.deploy.aws_instance.cml: Still destroying... [id=i-00cec8cfccadb1551, 30s elapsed]
 
 Destroy complete! Resources: 3 destroyed.
 
